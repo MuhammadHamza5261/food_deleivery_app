@@ -19,6 +19,14 @@ class DataBaseMethods{
         .update({"Wallet":amount});
   }
 
+//   create a image save method
+  Future addFoodItem(Map<String, dynamic> userInfoMap, String name) async{
+    return await  FirebaseFirestore.instance
+        .collection(name)
+        .add(userInfoMap);
+
+  }
+
 
 
 }
