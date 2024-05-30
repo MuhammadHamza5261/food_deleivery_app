@@ -21,7 +21,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
 
     return Scaffold(
       body: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20,vertical: 15),
+        margin: const EdgeInsets.symmetric(horizontal: 20,vertical: 65),
         child: Column(
           children: [
             Center(
