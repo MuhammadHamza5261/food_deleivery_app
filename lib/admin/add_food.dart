@@ -1,10 +1,11 @@
 import 'dart:io';
-
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:food_deleviery_app/widgets/widgtes_support.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:random_string/random_string.dart';
+
+
 
 class AddFoodScreen extends StatefulWidget {
   const AddFoodScreen({super.key});
@@ -15,7 +16,12 @@ class AddFoodScreen extends StatefulWidget {
 
 class _AddFoodScreenState extends State<AddFoodScreen> {
 
-   final List<String> items = ['Ice-cream','Burger','Salad','Pizza'];
+   final List<String> items = [
+     'Ice-cream',
+     'Burger',
+     'Salad',
+     'Pizza',
+   ];
 
    String? value;
 
@@ -38,6 +44,8 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
     });
 
    }
+
+   // upload item method
 
    uploadItem(){
 

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:food_deleviery_app/widgets/widgtes_support.dart';
 
 import 'detail_Screen.dart';
