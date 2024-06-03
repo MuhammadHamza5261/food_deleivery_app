@@ -1,9 +1,7 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:food_deleviery_app/widgets/widgtes_support.dart';
-
 import '../database/database_method.dart';
 import '../shared_preferences/shared_pref.dart';
 
@@ -28,7 +26,7 @@ class _OrderState extends State<Order> {
     });
   }
 
-  getthesharedpref()async{
+  getthesharedpref() async{
     id= await SharedPreferenceHelper().getUserId();
     wallet= await SharedPreferenceHelper().getUserWallet();
     setState(() {
@@ -36,7 +34,7 @@ class _OrderState extends State<Order> {
     });
   }
 
-  ontheload()async{
+  ontheload() async{
     await getthesharedpref();
     foodStream = await DataBaseMethods().getFoodCart(id!);
     setState(() {
@@ -65,16 +63,16 @@ class _OrderState extends State<Order> {
               scrollDirection: Axis.vertical,
               itemBuilder: (context, index) {
                 DocumentSnapshot ds = snapshot.data.docs[index];
-                total= total+ int.parse(ds["Total"]);
+                total = total+ int.parse(ds["Total"]);
                 return Container(
-                  margin: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
+                  margin: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10.0),
                   child: Material(
                     elevation: 5.0,
                     borderRadius: BorderRadius.circular(10),
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10)),
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       child: Row(
                         children: [
                           Container(
@@ -85,7 +83,7 @@ class _OrderState extends State<Order> {
                                 borderRadius: BorderRadius.circular(10)),
                             child: Center(child: Text(ds["Quantity"])),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 20.0,
                           ),
                           ClipRRect(
@@ -96,7 +94,7 @@ class _OrderState extends State<Order> {
                                 width: 90,
                                 fit: BoxFit.cover,
                               )),
-                          SizedBox(
+                          const SizedBox(
                             width: 20.0,
                           ),
                           Column(
@@ -117,7 +115,7 @@ class _OrderState extends State<Order> {
                   ),
                 );
               })
-              : CircularProgressIndicator();
+              : const CircularProgressIndicator();
         });
   }
 
@@ -125,7 +123,7 @@ class _OrderState extends State<Order> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.only(top: 60.0),
+        padding: const EdgeInsets.only(top: 60.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -138,15 +136,18 @@ class _OrderState extends State<Order> {
                           "Food Cart",
                           style: AppWidgets.headlineTextStyle(),
                         )))),
-            SizedBox(
+            const SizedBox(
               height: 20.0,
             ),
-            Container(
+            SizedBox(
                 height: MediaQuery.of(context).size.height/2,
                 child: foodCart(),
             ),
-            Spacer(),
-            Divider(),
+
+            const Spacer(),
+
+            const Divider(),
+
             Padding(
               padding: const EdgeInsets.only(left: 10.0, right: 10.0),
               child: Row(
@@ -163,7 +164,7 @@ class _OrderState extends State<Order> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20.0,
             ),
             GestureDetector(
@@ -173,19 +174,21 @@ class _OrderState extends State<Order> {
                 await SharedPreferenceHelper().saveUserWallet(amount.toString());
               },
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: 10.0),
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                     color: Colors.black, borderRadius: BorderRadius.circular(10)),
-                margin: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
-                child: Center(
+                margin: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
+                child: const Center(
                     child: Text(
                       "CheckOut",
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 20.0,
-                          fontWeight: FontWeight.bold),
-                    )),
+                          fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                ),
               ),
             )
           ],

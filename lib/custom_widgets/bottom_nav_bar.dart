@@ -5,8 +5,6 @@ import 'package:food_deleviery_app/screens/profile_screen.dart';
 import 'package:food_deleviery_app/screens/wallet_screen.dart';
 import '../screens/food_cart.dart';
 
-
-
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
 
@@ -15,6 +13,7 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavState extends State<BottomNavBar> {
+
   int currentTabIndex = 0;
 
   late List<Widget> pages;
@@ -24,12 +23,13 @@ class _BottomNavState extends State<BottomNavBar> {
   late Order order;
   late Wallet wallet;
 
+
   @override
   void initState() {
-    homepage = HomeScreen();
-    order = Order();
-    profile = ProfileScreen();
-    wallet = Wallet();
+    homepage = const HomeScreen();
+    order = const Order();
+    profile = const ProfileScreen();
+    wallet = const Wallet();
     pages = [homepage, order, wallet, profile];
     super.initState();
   }
@@ -41,13 +41,13 @@ class _BottomNavState extends State<BottomNavBar> {
           height: 65,
           backgroundColor: Colors.white,
           color: Colors.black,
-          animationDuration: Duration(milliseconds: 500),
+          animationDuration: const Duration(milliseconds: 500),
           onTap: (int index) {
             setState(() {
               currentTabIndex = index;
             });
           },
-          items: [
+          items: const [
             Icon(
               Icons.home_outlined,
               color: Colors.white,

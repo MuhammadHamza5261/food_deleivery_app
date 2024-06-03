@@ -21,7 +21,6 @@ class AuthMethods{
     user?.delete();
 
 
-
   }
 
 

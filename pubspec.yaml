@@ -41,11 +41,13 @@ dependencies:
   cloud_firestore: ^4.17.3
   flutter_bloc: ^8.1.5
   http: ^1.2.1
-  flutter_stripe: ^10.1.1
+  flutter_stripe: ^9.5.0+1
+#  flutter_stripe: ^10.1.1
   random_string: ^2.3.1
   shared_preferences: ^2.2.3
   image_picker: ^1.1.1
   firebase_storage: ^11.7.6
+  flutter_spinkit: ^5.2.1
 
 
 dev_dependencies:
@@ -58,6 +60,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
+  stripe_android: "9.5.0+1"
+
 
 
 # For information on the generic Dart part of this file, see the
