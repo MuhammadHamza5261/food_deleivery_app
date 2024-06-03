@@ -6,6 +6,7 @@ class SharedPreferenceHelper{
   static String userNameKey = "USERNAMEKEY";
   static String userEmailKey = "USEREMAILKEY";
   static String userWalletKey = "USERWALLETKEY";
+  static String userProfileKey = "USERPROFILEKEY";
 
 
 //     create all setter  function
@@ -37,6 +38,13 @@ class SharedPreferenceHelper{
 
     }
 
+  Future<bool> saveUserProfile(String getUserProfile) async{
+
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    return sp.setString(userProfileKey, getUserProfile);
+
+  }
+
 //     create all getter function
 
    Future<String?> getUserId() async{
@@ -67,6 +75,12 @@ class SharedPreferenceHelper{
 
     }
 
+  Future<String?> getUserProfile() async{
+
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    return sp.getString(userProfileKey);
+
+  }
 
 
 

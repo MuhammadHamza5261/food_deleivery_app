@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:food_deleviery_app/bloc/auth_bloc/auth_bloc.dart';
+import 'package:food_deleviery_app/screens/home_screen.dart';
 import 'package:food_deleviery_app/screens/onboarding_screen.dart';
 import 'package:food_deleviery_app/screens/wallet_screen.dart';
 import 'package:food_deleviery_app/widgets/app_constants.dart';
@@ -11,6 +12,7 @@ import 'admin/admin_home_screen.dart';
 import 'admin/admin_login.dart';
 import 'auth/login_screen.dart';
 import 'auth/sign_up_screen.dart';
+import 'custom_widgets/bottom_nav_bar.dart';
 
 
 
@@ -34,9 +36,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: AdminHomeScreen(),
+      home: BottomNavBar(),
     );
   }
 }

@@ -1,10 +1,10 @@
-
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:food_deleviery_app/screens/home_screen.dart';
-import 'package:food_deleviery_app/screens/order_Screen.dart';
 import 'package:food_deleviery_app/screens/profile_screen.dart';
 import 'package:food_deleviery_app/screens/wallet_screen.dart';
+import '../screens/food_cart.dart';
+
 
 
 class BottomNavBar extends StatefulWidget {
@@ -21,13 +21,13 @@ class _BottomNavState extends State<BottomNavBar> {
   late Widget currentPage;
   late HomeScreen homepage;
   late ProfileScreen profile;
-  late OrderScreen order;
+  late Order order;
   late Wallet wallet;
 
   @override
   void initState() {
     homepage = HomeScreen();
-    order = OrderScreen();
+    order = Order();
     profile = ProfileScreen();
     wallet = Wallet();
     pages = [homepage, order, wallet, profile];

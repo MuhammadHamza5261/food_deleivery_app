@@ -334,7 +334,8 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
             SnackBar(
                 content: Text('Food Item has been added Sucessfully',style: TextStyle(
                   fontSize: 18.0,
-                ),),
+                ),
+                ),
             )
         );
 
