@@ -416,7 +416,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:food_deleviery_app/admin/admin_login.dart';
 import 'package:food_deleviery_app/database/database_method.dart';
+import 'package:food_deleviery_app/shared_preferences/shared_pref.dart';
 import 'package:food_deleviery_app/widgets/widgtes_support.dart';
 
 import 'detail_Screen.dart';
@@ -431,8 +433,24 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
 
+  String? name;
+
+  getTheSharedPreference() async{
+    name = await SharedPreferenceHelper().getUserName();
+  }
+
+  getUserName() async{
+    await getTheSharedPreference();
+    setState(() {
+
+    });
+  }
+
+
+
+
   // create a bool type variable
-  bool iceCream = false, pizza = true, salad = false, burger = false;
+  bool iceCream = true, pizza = false, salad = false, burger = false;
 
   Stream? foodItemStream;
 
@@ -443,11 +461,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    getUserName();
     // call the method on init State
-    onTheLoad("Ice-cream");
+
+    onTheLoad("Burger");
+    onTheLoad("Salad");
     onTheLoad("Pizza");
-    onTheLoad("salad");
-    onTheLoad("burger");
+    onTheLoad("Ice-cream");
 
     super.initState();
   }
@@ -633,19 +653,35 @@ class _HomeScreenState extends State<HomeScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Hello Hamza',
-                    style: AppWidgets.boldTextStyle(),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(3),
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(3),
+                  Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'Hello ',
+                          style: AppWidgets.boldTextStyle().copyWith(color: Colors.red),
+                        ),
+                        TextSpan(
+                          text: name,
+                          style: AppWidgets.boldTextStyle().copyWith(color: Colors.red),
+                        ),
+                      ],
                     ),
-                    child: const Icon(
-                      Icons.shopping_cart_outlined,
-                      color: Colors.white,
+                  ),
+
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const AdminLogin()));
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(3),
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(3),
+                      ),
+                      child: const Icon(
+                        Icons.person,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ],

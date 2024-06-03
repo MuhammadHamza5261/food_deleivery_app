@@ -1,5 +1,5 @@
 // import 'package:flutter/material.dart';
-// import 'package:food_deleviery_app/widgets/content_model.dart';
+// import 'package:food_deleviery_app/widgets/onboard_content_model.dart';
 // import 'package:food_deleviery_app/widgets/widgtes_support.dart';
 //
 // class OnBoardingScreen extends StatefulWidget {
@@ -78,27 +78,28 @@
 //   }
 // }
 
-
 import 'package:flutter/material.dart';
 import 'package:food_deleviery_app/widgets/widgtes_support.dart';
 
 import '../auth/sign_up_screen.dart';
-import '../widgets/content_model.dart';
+import '../widgets/onboard_content_model.dart';
 
 
-class Onboard extends StatefulWidget {
-  const Onboard({super.key});
+class OnboardScreen extends StatefulWidget {
+  const OnboardScreen({super.key});
 
   @override
-  State<Onboard> createState() => _OnboardState();
+  State<OnboardScreen> createState() => _OnboardScreenState();
 }
 
-class _OnboardState extends State<Onboard> {
+class _OnboardScreenState extends State<OnboardScreen> {
+
   int currentIndex = 0;
   late PageController _controller;
 
   @override
   void initState() {
+
     _controller = PageController(initialPage: 0);
 
     super.initState();
@@ -126,7 +127,7 @@ class _OnboardState extends State<Onboard> {
                 },
                 itemBuilder: (_, i) {
                   return Padding(
-                    padding: EdgeInsets.only(top: 40.0, left: 20.0, right: 20.0),
+                    padding: const EdgeInsets.only(top: 40.0, left: 20.0, right: 20.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -136,14 +137,14 @@ class _OnboardState extends State<Onboard> {
                           width: MediaQuery.of(context).size.width ,
                           fit: BoxFit.fill,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 30.0,
                         ),
                         Text(
                           contents[i].title,
                           style: AppWidgets.headlineTextStyle(),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20.0,
                         ),
                         Text(
@@ -169,25 +170,29 @@ class _OnboardState extends State<Onboard> {
             onTap: () {
               if (currentIndex == contents.length - 1) {
                 Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (context) => SignUp()));
+                    context, MaterialPageRoute(builder: (context) => const SignUp()));
               }
               _controller.nextPage(
-                  duration: Duration(milliseconds: 100),
+                  duration: const Duration(milliseconds: 100),
                   curve: Curves.bounceIn);
             },
             child: Container(
               decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(20)),
               height: 60,
-              margin: EdgeInsets.all(40),
+              margin: const EdgeInsets.all(40),
               width: double.infinity,
               child: Center(
                 child: Text(
                   currentIndex == contents.length - 1?"Start": "Next",
-                  style: TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

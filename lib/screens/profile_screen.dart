@@ -6,6 +6,7 @@ import 'package:random_string/random_string.dart';
 import '../auth_screen/auth.dart';
 import '../shared_preferences/shared_pref.dart';
 
+
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
@@ -14,6 +15,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+
   String? profile, name, email;
   final ImagePicker _picker = ImagePicker();
   File? selectedImage;
@@ -29,6 +31,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   uploadItem() async {
     if (selectedImage != null) {
+
       String addId = randomAlphaNumeric(10);
 
       Reference firebaseStorageRef =
@@ -44,20 +47,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   getTheSharedPref() async {
+
     profile = await SharedPreferenceHelper().getUserProfile();
     name = await SharedPreferenceHelper().getUserName();
     email = await SharedPreferenceHelper().getUserEmail();
     setState(() {});
+
   }
 
-  onthisload() async {
+  onThisLoad() async {
     await getTheSharedPref();
     setState(() {});
   }
 
   @override
   void initState() {
-    onthisload();
+    onThisLoad();
     super.initState();
   }
 
@@ -65,192 +70,241 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: name ==null ?
-      Center(
+      const Center(
           child: CircularProgressIndicator(
             color: Colors.pink,
           )
-      ): Container(
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                Container(
-                  padding: EdgeInsets.only(top: 45.0, left: 20.0, right: 20.0),
-                  height: MediaQuery.of(context).size.height / 4.3,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.vertical(
-                          bottom: Radius.elliptical(
-                              MediaQuery.of(context).size.width, 105.0))),
+      ): Column(
+        children: [
+          Stack(
+            children: [
+              Container(
+                padding: const EdgeInsets.only(top: 45.0, left: 20.0, right: 20.0),
+                height: MediaQuery.of(context).size.height / 4.3,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.vertical(
+                        bottom: Radius.elliptical(
+                            MediaQuery.of(context).size.width, 105.0,
+                        ),
+                    ),
                 ),
-                Center(
-                  child: Container(
-                    margin: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height / 6.5),
-                    child: Material(
-                      elevation: 10.0,
+              ),
+              Center(
+                child: Container(
+                  margin: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height / 6.5),
+                  child: Material(
+                    elevation: 10.0,
+                    borderRadius: BorderRadius.circular(60),
+                    child: ClipRRect(
                       borderRadius: BorderRadius.circular(60),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(60),
-                        child: selectedImage==null?  GestureDetector(
-                          onTap: (){
-                            getImage();
-                          },
-                          child: profile==null? Image.asset(
-                            "/assetsimages/boy.jpg",
-                            height: 120,
-                            width: 120,
-                            fit: BoxFit.cover,
-                          ) :Image.network(
-                            profile!,
-                            height: 120,
-                            width: 120,
-                            fit: BoxFit.cover,
-                          ),
-                        ): Image.file(selectedImage!,  height: 120,
+                      child: selectedImage==null?  GestureDetector(
+                        onTap: (){
+                          getImage();
+                        },
+                        child: profile==null? Image.asset(
+                          "assets/images/boy.jpg",
+                          height: 120,
                           width: 120,
-                          fit: BoxFit.cover,),
-                      ),
+                          fit: BoxFit.cover,
+                        ) :Image.network(
+                          profile!,
+                          height: 120,
+                          width: 120,
+                          fit: BoxFit.cover,
+                        ),
+                      ): Image.file(selectedImage!,  height: 120,
+                        width: 120,
+                        fit: BoxFit.cover,),
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 70.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        name!,
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 23.0,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Poppins'),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 70.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      name!,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 23.0,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Poppins',
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 20.0),
-              child: Material(
-                borderRadius: BorderRadius.circular(10),
-                elevation: 2.0,
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 15.0,
-                    horizontal: 10.0,
-                  ),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.person,
-                        color: Colors.black,
-                      ),
-                      SizedBox(
-                        width: 20.0,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Name",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w600),
-                          ),
-                          Text(
-                            name!,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w600),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 20.0,
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Material(
+              borderRadius: BorderRadius.circular(10),
+              elevation: 2.0,
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 15.0,
+                  horizontal: 10.0,
+                ),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10)),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.person,
+                      color: Colors.black,
+                    ),
+                    SizedBox(
+                      width: 20.0,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Name",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w600),
+                        ),
+                        Text(
+                          name!,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w600),
+                        )
+                      ],
+                    )
+                  ],
                 ),
               ),
             ),
-            SizedBox(
-              height: 30.0,
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 20.0),
-              child: Material(
-                borderRadius: BorderRadius.circular(10),
-                elevation: 2.0,
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 15.0,
-                    horizontal: 10.0,
-                  ),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.email,
-                        color: Colors.black,
-                      ),
-                      SizedBox(
-                        width: 20.0,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Email",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w600),
-                          ),
-                          Text(
-                            email!,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w600),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
+          ),
+          SizedBox(
+            height: 30.0,
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 20.0),
+            child: Material(
+              borderRadius: BorderRadius.circular(10),
+              elevation: 2.0,
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                  vertical: 15.0,
+                  horizontal: 10.0,
+                ),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10)),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.email,
+                      color: Colors.black,
+                    ),
+                    const SizedBox(
+                      width: 20.0,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Email",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w600),
+                        ),
+                        Text(
+                          email!,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w600),
+                        )
+                      ],
+                    )
+                  ],
                 ),
               ),
             ),
-            SizedBox(
-              height: 30.0,
+          ),
+          const SizedBox(
+            height: 30.0,
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Material(
+              borderRadius: BorderRadius.circular(10),
+              elevation: 2.0,
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 15.0,
+                  horizontal: 10.0,
+                ),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10)),
+                child: const Row(
+                  children: [
+                    Icon(
+                      Icons.description,
+                      color: Colors.black,
+                    ),
+                    SizedBox(
+                      width: 20.0,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Terms and Condition",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.w600),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
             ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 20.0),
+          ),
+          const SizedBox(
+            height: 30.0,
+          ),
+          GestureDetector(
+            onTap: (){
+              AuthMethods().deleteUser();
+            },
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Material(
                 borderRadius: BorderRadius.circular(10),
                 elevation: 2.0,
                 child: Container(
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     vertical: 15.0,
                     horizontal: 10.0,
                   ),
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10)),
-                  child: Row(
+                  child: const Row(
                     children: [
                       Icon(
-                        Icons.description,
+                        Icons.delete,
                         color: Colors.black,
                       ),
                       SizedBox(
@@ -260,7 +314,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Terms and Condition",
+                            "Delete Account",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 20.0,
@@ -273,102 +327,55 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 30.0,
-            ),
-            GestureDetector(
-              onTap: (){
-                AuthMethods().deleteUser();
-              },
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Material(
-                  borderRadius: BorderRadius.circular(10),
-                  elevation: 2.0,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 15.0,
-                      horizontal: 10.0,
-                    ),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10)),
-                    child: const Row(
-                      children: [
-                        Icon(
-                          Icons.delete,
-                          color: Colors.black,
-                        ),
-                        SizedBox(
-                          width: 20.0,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Delete Account",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.w600),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
+          ),
+          const SizedBox(
+            height: 30.0,
+          ),
+          GestureDetector(
+            onTap: (){
+              AuthMethods().signOut();
+            },
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Material(
+                borderRadius: BorderRadius.circular(10),
+                elevation: 2.0,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 15.0,
+                    horizontal: 10.0,
+                  ),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: const Row(
+                    children: [
+                      Icon(
+                        Icons.logout,
+                        color: Colors.black,
+                      ),
+                      SizedBox(
+                        width: 20.0,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "LogOut",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w600),
+                          )
+                        ],
+                      )
+                    ],
                   ),
                 ),
               ),
             ),
-            SizedBox(
-              height: 30.0,
-            ),
-            GestureDetector(
-              onTap: (){
-                AuthMethods().signOut();
-              },
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Material(
-                  borderRadius: BorderRadius.circular(10),
-                  elevation: 2.0,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 15.0,
-                      horizontal: 10.0,
-                    ),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.logout,
-                          color: Colors.black,
-                        ),
-                        SizedBox(
-                          width: 20.0,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "LogOut",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.w600),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }

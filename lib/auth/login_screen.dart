@@ -2,13 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:food_deleviery_app/auth/forgot_password.dart';
 import 'package:food_deleviery_app/auth/sign_up_screen.dart';
 import 'package:food_deleviery_app/bloc/auth_bloc/auth_bloc.dart';
 import 'package:food_deleviery_app/bloc/auth_bloc/auth_event.dart';
 import 'package:food_deleviery_app/bloc/auth_bloc/auth_state.dart';
 import 'package:food_deleviery_app/custom_widgets/bottom_nav_bar.dart';
+import 'package:food_deleviery_app/shared_preferences/shared_pref.dart';
 import 'package:food_deleviery_app/widgets/widgtes_support.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 
@@ -126,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     child: Text('Forgot Password?',style: AppWidgets.semiBoldTextStyle(),)),
                               ),
                               const SizedBox(
-                                height: 60,
+                                height: 40,
                               ),
                               GestureDetector(
                                 onTap: (){
@@ -145,16 +148,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                   elevation: 5.0,
                                   borderRadius: BorderRadius.circular(20),
                                   child: Container(
-                                    padding: EdgeInsets.symmetric(vertical: 8.0),
+                                    padding: const EdgeInsets.symmetric(vertical: 10.0),
                                     width: width*0.5,
                                     decoration: BoxDecoration(
-                                        color: Color(0Xffff5722),
+                                        color: const Color(0Xffff5722),
                                         borderRadius: BorderRadius.circular(20)
                                     ),
                                     child: Center(
                                       child:
-                                          state is SignInProgressState ? Center(
-                                            child: CircularProgressIndicator(
+                                          state is SignInProgressState ?
+                                          const Center(
+                                            child: SpinKitFadingCircle(
                                               color: Colors.white,
                                             ),
                                           ):
@@ -194,9 +198,11 @@ class _LoginScreenState extends State<LoginScreen> {
             ],
           );
         },
-        listener: (context,state){
+        listener: (context,state) async{
 
           if(state is SignInDataIsLoadedState){
+            // await SharedPreferenceHelper().saveUserName(emailController.text);
+
             Navigator.push(context, MaterialPageRoute(builder: (context)=> BottomNavBar()));
           }
 
