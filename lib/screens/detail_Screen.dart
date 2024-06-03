@@ -1,9 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:food_deleviery_app/database/database_method.dart';
+import 'package:food_deleviery_app/shared_preferences/shared_pref.dart';
 import 'package:food_deleviery_app/widgets/widgtes_support.dart';
 class DetailScreen extends StatefulWidget {
-  const DetailScreen({Key? key}) : super(key: key);
+
+  String image, name , detail, price;
+  DetailScreen({Key? key,
+    required this.detail,
+    required this.image,
+    required this.name,
+    required this.price}) : super(key: key);
 
   @override
   State<DetailScreen> createState() => _DetailScreenState();
@@ -14,6 +23,31 @@ class _DetailScreenState extends State<DetailScreen> {
   // we will create a variable
 
   int a = 1;
+  int totalPrice = 0;
+  String?  id;
+
+
+  getTheSharedPreference() async{
+    id = await SharedPreferenceHelper().getUserId();
+    setState(() {
+
+    });
+  }
+
+  onTheLoad() async{
+    await getTheSharedPreference();
+    setState(() {
+
+    });
+
+  }
+
+  @override
+  void initState() {
+    onTheLoad();
+    totalPrice = int.parse(widget.price);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,14 +60,18 @@ class _DetailScreenState extends State<DetailScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset('assets/images/salad2.png',width: width,height: height/2.5,fit: BoxFit.fill,),
+            Image.network(widget.image,
+              width: width,
+              height: height/2.5,
+              fit: BoxFit.fill,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Mediterranean',
+                    Text(widget.name,
                       style: AppWidgets.semiBoldTextStyle(),
                     ),
                     Text('Chickpea Salad',
@@ -45,6 +83,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   onTap: (){
                     if(a>1){
                       --a;
+                      totalPrice = totalPrice-int.parse(widget.price);
                     }
 
                     setState(() {
@@ -64,6 +103,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 GestureDetector(
                   onTap: (){
                     ++a;
+                    totalPrice = totalPrice+int.parse(widget.price);
                     setState(() {
 
                     });
@@ -83,7 +123,7 @@ class _DetailScreenState extends State<DetailScreen> {
         SizedBox(
           height: 20.0,
         ),
-        Text('Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry',
+        Text(widget.detail,
           style: AppWidgets.lightTextStyle(),
         ),
             SizedBox(
@@ -110,31 +150,54 @@ class _DetailScreenState extends State<DetailScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Total Price',style: AppWidgets.semiBoldTextStyle(),),
-                      Text('\$28',style: AppWidgets.headlineTextStyle(),),
+                      Text('\$'+totalPrice.toString(),
+                        style: AppWidgets.headlineTextStyle(),),
                     ],
                   ),
-                  Container(
-                    width: width/2,
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(color: Colors.black,borderRadius: BorderRadius.circular(10)),
-                    child: Row(
-                      children: [
-                        Text('Add to cart',style: TextStyle(color: Colors.white,fontSize: 16.0,fontFamily: 'Poppins')),
-                        SizedBox(
-                          width: 30.0,
-                        ),
-                        Container(
+                  GestureDetector(
+                    onTap: () async{
 
-                          padding: EdgeInsets.all(3),
-                          decoration: BoxDecoration(
-                            color: Colors.grey,
-                            borderRadius: BorderRadius.circular(8)
+                      Map<String, dynamic> addFoodToCart = {
+                        "Name": widget.name,
+                        "Quantity": a.toString(),
+                        "Total": totalPrice.toString(),
+                        "Image": widget.image,
+                      };
+
+                      await DataBaseMethods().addFoodToCart(addFoodToCart, id!);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                              content: Text('Food added to cart'),
+                          )
+                      );
+
+
+
+
+                    },
+                    child: Container(
+                      width: width/2,
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(color: Colors.black,borderRadius: BorderRadius.circular(10)),
+                      child: Row(
+                        children: [
+                          Text('Add to cart',style: TextStyle(color: Colors.white,fontSize: 16.0,fontFamily: 'Poppins')),
+                          SizedBox(
+                            width: 30.0,
                           ),
-                          child: Icon(Icons.shopping_cart_outlined,color: Colors.white,),
+                          Container(
 
-                        ),
+                            padding: EdgeInsets.all(3),
+                            decoration: BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius: BorderRadius.circular(8)
+                            ),
+                            child: Icon(Icons.shopping_cart_outlined,color: Colors.white,),
 
-                      ],
+                          ),
+
+                        ],
+                      ),
                     ),
                   ),
                 ],
