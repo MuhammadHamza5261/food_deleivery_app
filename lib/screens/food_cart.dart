@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:food_deleviery_app/widgets/widgtes_support.dart';
 import '../database/database_method.dart';
 import '../shared_preferences/shared_pref.dart';
@@ -115,7 +116,9 @@ class _OrderState extends State<Order> {
                   ),
                 );
               })
-              : const CircularProgressIndicator();
+              : const SpinKitFadingCircle(
+            color: Colors.red,
+          );
         });
   }
 

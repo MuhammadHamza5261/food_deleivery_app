@@ -167,7 +167,8 @@ class _DetailScreenState extends State<DetailScreen> {
                       await DataBaseMethods().addFoodToCart(addFoodToCart, id!);
                       ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                              content: Text('Food added to cart'),
+                            backgroundColor: Colors.red,
+                              content: Center(child: Text('Food added to cart')),
                           )
                       );
 

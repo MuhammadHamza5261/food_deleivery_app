@@ -416,6 +416,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:food_deleviery_app/admin/admin_login.dart';
 import 'package:food_deleviery_app/database/database_method.dart';
 import 'package:food_deleviery_app/shared_preferences/shared_pref.dart';
@@ -478,7 +479,7 @@ class _HomeScreenState extends State<HomeScreen> {
       stream: foodItemStream,
       builder: (context, AsyncSnapshot snapshot) {
         if (!snapshot.hasData) {
-          return Center(child: CircularProgressIndicator(color: Colors.blue));
+          return const Center(child: SpinKitFadingCircle(color: Colors.red));
         }
 
         return ListView.builder(
@@ -556,7 +557,7 @@ class _HomeScreenState extends State<HomeScreen> {
       stream: foodItemStream,
       builder: (context, AsyncSnapshot snapshot) {
         if (!snapshot.hasData) {
-          return Center(child: CircularProgressIndicator(color: Colors.blue));
+          return const Center(child: SpinKitFadingCircle(color: Colors.red));
         }
 
         return ListView.builder(
@@ -657,11 +658,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     TextSpan(
                       children: [
                         TextSpan(
-                          text: 'Hello ',
+                          text: 'Welcome',
                           style: AppWidgets.boldTextStyle().copyWith(color: Colors.red),
                         ),
                         TextSpan(
-                          text: name,
+                          text: ' Yummies Food',
                           style: AppWidgets.boldTextStyle().copyWith(color: Colors.red),
                         ),
                       ],

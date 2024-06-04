@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:random_string/random_string.dart';
 import '../auth_screen/auth.dart';
@@ -71,8 +72,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       body: name ==null ?
       const Center(
-          child: CircularProgressIndicator(
-            color: Colors.pink,
+          child: SpinKitFadingCircle(
+            color: Colors.red,
           )
       ): Column(
         children: [
