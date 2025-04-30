@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:food_deleviery_app/bloc/auth_bloc/auth_bloc.dart';
+import 'package:food_deleviery_app/custom_widgets/bottom_nav_bar.dart';
 import 'package:food_deleviery_app/screens/onboarding_screen.dart';
+import 'package:food_deleviery_app/screens/splash_screen.dart';
 import 'package:food_deleviery_app/widgets/app_constants.dart';
 import 'admin/admin_login.dart';
 
 
 void main() async {
 
-  // add firebase in app
   WidgetsFlutterBinding.ensureInitialized();
   Stripe.publishableKey  = publishableKey;
   await Firebase.initializeApp();
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: OnboardScreen(),
+      home: SplashScreen(),
     );
   }
 }

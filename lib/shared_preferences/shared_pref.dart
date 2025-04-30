@@ -8,6 +8,52 @@ class SharedPreferenceHelper{
   static String userWalletKey = "USERWALLETKEY";
   static String userProfileKey = "USERPROFILEKEY";
 
+  static String _isLoggedKey = "isLogginIn";
+
+
+  static Future<void> saveUser({required String name, required String email}) async{
+
+     final SharedPreferences sp = await SharedPreferences.getInstance();
+     sp.setString(userNameKey, name);
+     sp.setString(userEmailKey, email);
+
+  }
+
+  static Future<Map<String, String?>> getUser() async {
+
+    final SharedPreferences sp = await SharedPreferences.getInstance();
+    return {
+      'name': sp.getString(userNameKey),
+      'email': sp.getString(userEmailKey),
+    };
+  }
+
+
+
+
+
+
+   static Future<void> setLoginStatus(bool isLoggedIn) async{
+
+     final SharedPreferences sp = await SharedPreferences.getInstance();
+     sp.setBool(_isLoggedKey, isLoggedIn);
+   }
+
+   static Future<bool> getLoginStatus() async{
+
+     final SharedPreferences sp = await SharedPreferences.getInstance();
+      return  sp.getBool(_isLoggedKey) ?? false;
+   }
+
+   static Future<void> clearLoginStatus() async {
+
+     final SharedPreferences sp = await SharedPreferences.getInstance();
+     sp.remove(_isLoggedKey);
+
+   }
+
+
+
 
 //     create all setter  function
    Future<bool> saveUserId(String getUserId) async{

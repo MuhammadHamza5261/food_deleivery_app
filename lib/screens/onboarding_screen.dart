@@ -1,83 +1,3 @@
-// import 'package:flutter/material.dart';
-// import 'package:food_deleviery_app/widgets/onboard_content_model.dart';
-// import 'package:food_deleviery_app/widgets/widgtes_support.dart';
-//
-// class OnBoardingScreen extends StatefulWidget {
-//
-//   const OnBoardingScreen({Key? key}) : super(key: key);
-//
-//   @override
-//   State<OnBoardingScreen> createState() => _OnBoardingScreenState();
-// }
-//
-// class _OnBoardingScreenState extends State<OnBoardingScreen> {
-//
-//   int currentIndex = 0;
-//   late PageController _controller;
-//
-//   @override
-//   void initState() {
-//     _controller = PageController();
-//     super.initState();
-//   }
-//
-//   @override
-//   void dispose() {
-//     _controller.dispose();
-//     super.dispose();
-//   }
-//
-//
-//
-//   @override
-//   Widget build(BuildContext context) {
-//
-//     return Column(
-//       children: [
-//         PageView.builder(
-//           itemCount: contents.length,
-//           controller: _controller,
-//             onPageChanged: (int index){
-//                setState(() {
-//                  currentIndex = index;
-//                });
-//             },
-//             itemBuilder: (_, i){
-//               return Padding(
-//                   padding: EdgeInsets.all(20),
-//                 child: Column(
-//                   children: [
-//                     Image.asset(contents[i].image, height: 450, width: MediaQuery.of(context).size.width/1.5,fit: BoxFit.fill,),
-//                     SizedBox(
-//                       height: 40,
-//                     ),
-//                     Text(contents[i].title,style: AppWidgets.semiBoldTextStyle(),),
-//                     SizedBox(
-//                       height: 20,
-//                     ),
-//                     Text(contents[i].description,style: AppWidgets.lightTextStyle(),),
-//                   ],
-//                 ),
-//               );
-//           }
-//          ),
-//         Container(
-//           child: Row(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: [
-//
-//             ],
-//           ),
-//
-//
-//
-//         ),
-//
-//       ],
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import 'package:food_deleviery_app/widgets/widgtes_support.dart';
 
@@ -114,6 +34,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Column(
         children: [
           Expanded(
@@ -202,7 +123,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
     return Container(
       height: 10.0,
       width: currentIndex == index ? 18 : 7,
-      margin: EdgeInsets.only(right: 5),
+      margin: const EdgeInsets.only(right: 5),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6), color: Colors.black38),
     );

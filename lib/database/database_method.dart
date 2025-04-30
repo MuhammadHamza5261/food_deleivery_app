@@ -2,6 +2,29 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DataBaseMethods{
 
+
+  final CollectionReference usersCollection =
+  FirebaseFirestore.instance.collection('users');
+
+  Future<Map<String, dynamic>?> getUserByEmail(String email) async {
+    QuerySnapshot snapshot =
+    await usersCollection.where("Email", isEqualTo: email).get();
+
+    if (snapshot.docs.isNotEmpty) {
+      return snapshot.docs.first.data() as Map<String, dynamic>;
+    } else {
+      return null;
+    }
+  }
+
+
+
+
+
+
+
+
+
   Future addUserDetail(Map<String, dynamic> userInfoMap, String id) async{
     return await  FirebaseFirestore.instance
         .collection('users')

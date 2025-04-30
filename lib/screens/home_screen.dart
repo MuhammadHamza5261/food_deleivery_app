@@ -412,12 +412,14 @@
 //     );
 // }
 // }
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:food_deleviery_app/admin/admin_login.dart';
+import 'package:food_deleviery_app/auth/login_screen.dart';
 import 'package:food_deleviery_app/database/database_method.dart';
 import 'package:food_deleviery_app/shared_preferences/shared_pref.dart';
 import 'package:food_deleviery_app/widgets/widgtes_support.dart';
@@ -473,6 +475,9 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
+
+
+
   // all items horizontally
   Widget allItems() {
     return StreamBuilder(
@@ -525,14 +530,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           ds["Name"],
                           style: AppWidgets.semiBoldTextStyle(),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Text(
                           'Fresh and Healthy',
                           style: AppWidgets.lightTextStyle(),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 2,
                         ),
                         Text(
@@ -580,12 +585,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               },
               child: Container(
-                margin: EdgeInsets.all(4),
+                margin: const EdgeInsets.all(4),
                 child: Material(
                   elevation: 5,
                   borderRadius: BorderRadius.circular(20),
                   child: Container(
-                    padding: EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(5),
                     child: Row(
                       children: [
                         Image.network( ds["Image"],
@@ -593,7 +598,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           width: 120,
                           fit: BoxFit.cover,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Column(
@@ -615,7 +620,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 style: AppWidgets.lightTextStyle(),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
                             Container(
@@ -641,133 +646,98 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
 
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 50),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text.rich(
-                    TextSpan(
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+       // appBar: AppBar(
+       //   backgroundColor: Colors.transparent,
+       //   leading: IconButton(
+       //       onPressed: (){},
+       //       icon: const Icon(Icons.menu)
+       //   ),
+       // ),
+
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 50),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
                       children: [
-                        TextSpan(
-                          text: 'Welcome',
-                          style: AppWidgets.boldTextStyle().copyWith(color: Colors.red),
+                        Text(
+                          "Welcome ",
+                          style: AppWidgets.boldTextStyle().copyWith(
+                            color: const Color(0Xffff5722),
+                            fontSize: 17,
+                          ),
                         ),
-                        TextSpan(
-                          text: ' Yummies Food',
-                          style: AppWidgets.boldTextStyle().copyWith(color: Colors.red),
+                        AnimatedTextKit(
+                          repeatForever: true,
+                          animatedTexts: [
+                            FadeAnimatedText(
+                              name ?? "",
+                              textStyle: AppWidgets.boldTextStyle().copyWith(
+                                color: const Color(0Xffff5722),
+                                fontSize: 17,
+                              ),
+                              duration: const Duration(milliseconds: 1500),
+                            ),
+                          ],
+                          isRepeatingAnimation: true,
+                          pause: const Duration(milliseconds: 300),
                         ),
                       ],
                     ),
-                  ),
-
-                  GestureDetector(
-                    onTap: (){
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const AdminLogin()));
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(3),
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(3),
-                      ),
-                      child: const Icon(
-                        Icons.person,
-                        color: Colors.white,
+                    IconButton(
+                      onPressed: () {
+                        _showLogoutDialog();
+                      },
+                      icon: const Icon(
+                        Icons.logout,
+                        color: Colors.red,
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 20.0,
-              ),
-              Text(
-                'Delicious Food',
-                style: AppWidgets.headlineTextStyle(),
-              ),
-              Text(
-                'Discover and Get Great Food',
-                style: AppWidgets.lightTextStyle(),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              showItem(),
-              SizedBox(
-                height: 30,
-              ),
-              Container(
+                  ],
+                ),
+
+                const SizedBox(
+                  height: 20.0,
+                ),
+                Text(
+                  'Delicious Food',
+                  style: AppWidgets.headlineTextStyle(),
+                ),
+                Text(
+                  'Discover and Get Great Food',
+                  style: AppWidgets.lightTextStyle(),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                showItem(),
+                const SizedBox(
+                  height: 30,
+                ),
+                Container(
+                    height: 270,
+                    child: allItems(),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Container(
                   height: 270,
-                  child: allItems(),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Container(
-                height: 270,
-                  child: allItemsVertically()),
-              // Material(
-              //   elevation: 5,
-              //   borderRadius: BorderRadius.circular(20),
-              //   child: Container(
-              //     padding: EdgeInsets.all(5),
-              //     child: Row(
-              //       children: [
-              //         Image.asset(
-              //           'assets/images/salad2.png',
-              //           height: 120,
-              //           width: 120,
-              //           fit: BoxFit.cover,
-              //         ),
-              //         SizedBox(
-              //           width: 20,
-              //         ),
-              //         Column(
-              //           crossAxisAlignment: CrossAxisAlignment.start,
-              //           children: [
-              //             Container(
-              //               width: MediaQuery.of(context).size.width / 2,
-              //               child: Text(
-              //                 'Mediterranean Chickpea Salad',
-              //                 style: AppWidgets.boldTextStyle(),
-              //               ),
-              //             ),
-              //             SizedBox(
-              //               height: 5,
-              //             ),
-              //             Container(
-              //               width: MediaQuery.of(context).size.width / 2,
-              //               child: Text(
-              //                 'Honey goot Cheese',
-              //                 style: AppWidgets.lightTextStyle(),
-              //               ),
-              //             ),
-              //             SizedBox(
-              //               height: 5,
-              //             ),
-              //             Container(
-              //               width: MediaQuery.of(context).size.width / 2,
-              //               child: Text(
-              //                 '\$28',
-              //                 style: AppWidgets.boldTextStyle(),
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ),
-            ],
+                    child: allItemsVertically()),
+              ],
+            ),
           ),
         ),
       ),
@@ -800,7 +770,7 @@ class _HomeScreenState extends State<HomeScreen> {
               decoration: BoxDecoration(
                   color: iceCream ? Colors.black : Colors.white,
                   borderRadius: BorderRadius.circular(10)),
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Image.asset(
                 'assets/images/ice-cream.png',
                 height: 40,
@@ -831,7 +801,7 @@ class _HomeScreenState extends State<HomeScreen> {
               decoration: BoxDecoration(
                   color: pizza ? Colors.black : Colors.white,
                   borderRadius: BorderRadius.circular(10)),
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Image.asset(
                 'assets/images/pizza (1).png',
                 height: 40,
@@ -862,7 +832,7 @@ class _HomeScreenState extends State<HomeScreen> {
               decoration: BoxDecoration(
                   color: salad ? Colors.black : Colors.white,
                   borderRadius: BorderRadius.circular(10)),
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Image.asset(
                 'assets/images/salad (1).png',
                 height: 40,
@@ -893,7 +863,7 @@ class _HomeScreenState extends State<HomeScreen> {
               decoration: BoxDecoration(
                   color: burger ? Colors.black : Colors.white,
                   borderRadius: BorderRadius.circular(10)),
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Image.asset(
                 'assets/images/burger.png',
                 height: 40,
@@ -907,4 +877,62 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
     );
   }
+
+   void _showLogoutDialog(){
+    showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return AlertDialog(
+
+            title:  Center(child: Text("Logout",style: AppWidgets.headlineTextStyle(),)),
+            content:  Text("Are you sure you want to logout?",style: AppWidgets.lightTextStyle().copyWith(
+              fontSize: 16
+            ),),
+            actions: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                        side: BorderSide(color: Colors.red),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+
+                        )
+                    ),
+                    onPressed: (){
+                      Navigator.pop(context);
+                    },
+                    child: Text("No",style: AppWidgets.semiBoldTextStyle(
+                    ).copyWith(fontSize: 14,
+                        color: Colors.red)),
+                  ),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor:  const Color(0Xffff5722),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          )
+                      ),
+                      onPressed: (){
+                        SharedPreferenceHelper.clearLoginStatus();
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const LoginScreen()));
+                      },
+                      child: Text("Yes",style: AppWidgets.semiBoldTextStyle().copyWith(
+                          color: Colors.white,
+                          fontSize: 14
+                      ),)
+                  ),
+                ],
+              ),
+
+            ],
+
+          );
+        }
+    );
+
+   }
+
+
 }

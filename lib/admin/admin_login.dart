@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:food_deleviery_app/custom_widgets/bottom_nav_bar.dart';
 import '../widgets/widgtes_support.dart';
 import 'admin_home_screen.dart';
 
@@ -30,149 +31,161 @@ class _AdminLoginState extends State<AdminLogin> {
     var height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+            onPressed: (){
+             Navigator.push(context, MaterialPageRoute(builder: (context)=> BottomNavBar()));
+             },
+            icon: Icon(Icons.arrow_back,color: Colors.black,)
+        ),
+      ),
 
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xFFededeb),
-      body: Stack(
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: height/2),
-            padding:  const EdgeInsets.only(top: 45.0,left: 20.0,right: 20.0),
-            height: height,
-            width: width,
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color.fromARGB(255, 53, 51, 51),
-                  Colors.black,
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.vertical(
-                top: Radius.elliptical(width, 110.0),
+      body: PopScope(
+        canPop: false,
+        child: Stack(
+          children: [
+            Container(
+              margin: EdgeInsets.only(top: height/2),
+              padding:  const EdgeInsets.only(top: 45.0,left: 20.0,right: 20.0),
+              height: height,
+              width: width,
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [Color.fromARGB(255, 53, 51, 51),
+                    Colors.black,
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.elliptical(width, 110.0),
+                ),
               ),
             ),
-          ),
 
-          Container(
-            margin: const EdgeInsets.only(left: 30.0,right: 30.0,top: 60.0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  const Text("Let's start with\nAdmin!",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 25.0,
-                      fontWeight: FontWeight.bold
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30.0,
-                  ),
-                  Material(
-                    elevation: 3.0,
-                    borderRadius: BorderRadius.circular(30),
-                    child: Container(
-                      height: height/2.2,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
+            Container(
+              margin: const EdgeInsets.only(left: 30.0,right: 30.0,top: 60.0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    const Text("Let's start with\nAdmin!",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 25.0,
+                        fontWeight: FontWeight.bold
                       ),
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                            height: 50,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.only(left: 20,top: 5.0,bottom: 5.0),
-                            margin: const EdgeInsets.symmetric(horizontal: 20),
+                    ),
+                    const SizedBox(
+                      height: 30.0,
+                    ),
+                    Material(
+                      elevation: 3.0,
+                      borderRadius: BorderRadius.circular(30),
+                      child: Container(
+                        height: height/2.2,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 50,
+                            ),
+                            Container(
+                              padding: const EdgeInsets.only(left: 20,top: 5.0,bottom: 5.0),
+                              margin: const EdgeInsets.symmetric(horizontal: 20),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: const Color.fromARGB(255, 160, 160, 147,),
+                                  ),
+                                  borderRadius:  BorderRadius.circular(10),
+
+                                ),
+                              child: Center(
+                                child: TextFormField(
+
+                                  cursorColor: Colors.black54,
+                                  controller: nameController,
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+
+                                    hintText: 'Username',
+                                    hintStyle: AppWidgets.semiBoldTextStyle(),
+                                    prefixIcon: const Icon(Icons.email_outlined),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 40.0,
+                            ),
+                            Container(
+                              padding: const EdgeInsets.only(left: 20,top: 5.0,bottom: 5.0),
+                              margin: const EdgeInsets.symmetric(horizontal: 20),
                               decoration: BoxDecoration(
                                 border: Border.all(color: const Color.fromARGB(255, 160, 160, 147,),
                                 ),
                                 borderRadius:  BorderRadius.circular(10),
 
                               ),
-                            child: Center(
-                              child: TextFormField(
-
-                                cursorColor: Colors.black54,
-                                controller: nameController,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-
-                                  hintText: 'Username',
-                                  hintStyle: AppWidgets.semiBoldTextStyle(),
-                                  prefixIcon: const Icon(Icons.email_outlined),
+                              child: Center(
+                                child: TextFormField(
+                                  keyboardType: TextInputType.number,
+                                  cursorColor: Colors.black54,
+                                  obscureText: true,
+                                  controller: passwordController,
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: 'Password',
+                                    hintStyle: AppWidgets.semiBoldTextStyle(),
+                                    prefixIcon: const Icon(Icons.password),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 40.0,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.only(left: 20,top: 5.0,bottom: 5.0),
-                            margin: const EdgeInsets.symmetric(horizontal: 20),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: const Color.fromARGB(255, 160, 160, 147,),
-                              ),
-                              borderRadius:  BorderRadius.circular(10),
-
+                            const SizedBox(
+                              height: 40.0,
                             ),
-                            child: Center(
-                              child: TextFormField(
-                                keyboardType: TextInputType.number,
-                                cursorColor: Colors.black54,
-                                obscureText: true,
-                                controller: passwordController,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'Password',
-                                  hintStyle: AppWidgets.semiBoldTextStyle(),
-                                  prefixIcon: const Icon(Icons.password),
+                            GestureDetector(
+                              onTap: (){
+                                loginAdmin();
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(vertical: 12.0),
+                                margin: const EdgeInsets.symmetric(horizontal: 12.0),
+                                width: width,
+                                decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius: BorderRadius.circular(10),
+
+                                ),
+                                child: const Center(
+                                  child:
+                                  Text(
+                                    'LogIn',style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),),
                                 ),
                               ),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 40.0,
-                          ),
-                          GestureDetector(
-                            onTap: (){
-                              loginAdmin();
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 12.0),
-                              margin: const EdgeInsets.symmetric(horizontal: 12.0),
-                              width: width,
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(10),
-
-                              ),
-                              child: const Center(
-                                child:
-                                Text(
-                                  'LogIn',style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold,
-                                ),),
-                              ),
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
+
             ),
 
-          ),
-
-        ],
+          ],
+        ),
       ),
     );
   }
